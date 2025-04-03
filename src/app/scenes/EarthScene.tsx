@@ -1,44 +1,38 @@
 "use client";
 
 import { Canvas } from "@react-three/fiber";
-import React, { Suspense, useState } from "react";
-import { OrbitControls } from "@react-three/drei";
-import SceneLoader from "../components/SceneLoader";
-import Earth from "../bodies/Earth";
-import Sun from "../bodies/Sun";
+import { useState } from "react";
+import { EARTH_MAX_DISTANCE, EARTH_MIN_DISTANCE } from "../constants/bodies";
+import Zoom from "../components/Zoom";
+import Time from "../components/Time";
+import EarthCanvas from "../canvases/EarthCanvas";
 
 export default function EarthScene() {
   const [day, setDay] = useState(1);
+  const [zoom, setZoom] = useState(EARTH_MAX_DISTANCE);
+  const [loading, setLoading] = useState(true);
 
   return (
     <div className="w-screen h-screen">
       <Canvas className="bg-black w-screen h-screen">
-        <Suspense fallback={<SceneLoader />}>
-          <ambientLight intensity={0.5} />
-
-          <Earth />
-          <Sun day={day} setDay={setDay} />
-
-          {/* <axesHelper args={[50]} /> */}
-          <OrbitControls
-            maxDistance={10}
-            minDistance={3.5}
-            minAzimuthAngle={0}
-            maxAzimuthAngle={2 * Math.PI}
-            // minPolarAngle={0}
-            // maxPolarAngle={Math.PI}
-            // enableRotate={false}
-          />
-        </Suspense>
+        <EarthCanvas
+          day={day}
+          setDay={setDay}
+          setZoom={setZoom}
+          setLoading={setLoading}
+        />
       </Canvas>
 
-      <Time day={day} />
+      {!loading && (
+        <>
+          <Time day={day} />
+          <Zoom
+            zoom={zoom}
+            minDistance={EARTH_MIN_DISTANCE}
+            maxDistance={EARTH_MAX_DISTANCE}
+          />
+        </>
+      )}
     </div>
-  );
-}
-
-function Time({ day }: { day: number }) {
-  return (
-    <div className="absolute bottom-12 right-12 text-white">Day {day}</div>
   );
 }
