@@ -1,6 +1,6 @@
 // lights
 export const AMBIENT_LIGHT_INTENSITY = 0.3;
-export const POINT_LIGHT_INTENSITY = 800;
+export const POINT_LIGHT_INTENSITY = 1000;
 
 // earth
 export const EARTH_SCALE = 0.028;

@@ -28,15 +28,8 @@ function HoverElement({ isHovered, hoverChildren, zIndex = 0 }: Props) {
   useEffect(() => {
     window.addEventListener("mousemove", handleMouseMove);
 
-    const handleMouseMoveWithLogging = (event: MouseEvent) => {
-      console.log(`Mouse position: X=${event.clientX}, Y=${event.clientY}`);
-      handleMouseMove(event);
-    };
-
-    window.addEventListener("mousemove", handleMouseMoveWithLogging);
-
     return () => {
-      window.removeEventListener("mousemove", handleMouseMoveWithLogging);
+      window.removeEventListener("mousemove", handleMouseMove);
     };
   }, []);
 
@@ -65,7 +58,7 @@ function HoverElement({ isHovered, hoverChildren, zIndex = 0 }: Props) {
   );
 
   return createPortal(
-    <AnimatePresence>{isHovered && hoverElement}</AnimatePresence>,
+    <AnimatePresence>{hoverElement}</AnimatePresence>,
     document.body,
   );
 }

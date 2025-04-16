@@ -1,6 +1,12 @@
-import { CaretRight, IconWeight, Question, X } from "@phosphor-icons/react";
+import {
+  CaretRight,
+  IconWeight,
+  Question,
+  Spinner,
+  X,
+} from "@phosphor-icons/react";
 
-export type IconType = "Question" | "CaretRight" | "X";
+export type IconType = "Question" | "CaretRight" | "X" | "Spinner";
 
 interface Props {
   name: IconType;
@@ -21,6 +27,7 @@ export default function Icon({
     Question,
     CaretRight,
     X,
+    Spinner,
   };
   const PhosphorIcon = icons[name as keyof typeof icons];
 
